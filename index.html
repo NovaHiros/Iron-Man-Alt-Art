@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Iron Man Deck</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      overflow-y: auto;
+      font-family: Arial, sans-serif;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr); /* 6 colonne */
+      gap: 25px 25px; /* distanza leggermente ridotta */
+      max-width: 1920px;
+      padding: 20px;
+      box-sizing: border-box;
+      justify-items: center;
+    }
+
+    .grid img {
+      width: 300px;
+      height: auto;
+      background: #222;
+      border-radius: 6px;
+      box-shadow: 0 0 8px rgba(255,255,255,0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      display: block;
+    }
+
+    .grid img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255,255,255,0.3);
+      z-index: 10;
+    }
+
+    #lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      cursor: zoom-out;
+      z-index: 9999;
+    }
+
+    #lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(255,255,255,0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grid">
+    <img src="https://i.ibb.co/qLznvcfk/0a-Tony-Stark.png" alt="Tony Stark" />
+    <img src="https://i.ibb.co/vxxDMbsZ/0b-Iron-Man.png" alt="Iron Man" />
+    <img src="https://i.ibb.co/pvDJt2Zz/01-War-Machine.png" alt="War Machine" />
+    <img src="https://i.ibb.co/n8DbGRvp/02-Repulsor-Blast.png" alt="Repulsor Blast 1" />
+    <img src="https://i.ibb.co/rfQ6K4nb/03-Repulsor-Blast.png" alt="Repulsor Blast 2" />
+    <img src="https://i.ibb.co/r2Hkbwkn/04-Repulsor-Blast.png" alt="Repulsor Blast 3" />
+    <img src="https://i.ibb.co/HfRN9Zj6/05-Supersonic-Punch.png" alt="Supersonic Punch 1" />
+    <img src="https://i.ibb.co/qFCMv7Th/06-Supersonic-Punch.png" alt="Supersonic Punch 2" />
+    <img src="https://i.ibb.co/8TS8NDp/07-Pepper-Pots.png" alt="Pepper Pots" />
+    <img src="https://i.ibb.co/BVvnXhzq/08-Stark-Tower.png" alt="Stark Tower" />
+    <img src="https://i.ibb.co/MDq8dNS4/09-Arc-Reactor.png" alt="Arc Reactor" />
+    <img src="https://i.ibb.co/wZ7ZM4JF/10-Mark-V-Armor.png" alt="Mark V Armor" />
+    <img src="https://i.ibb.co/3mTK5Z1L/11-Mark-V-Helmet.png" alt="Mark V Helmet" />
+    <img src="https://i.ibb.co/jvD0J9Wz/12-Powered-Gauntlets.png" alt="Powered Gauntlets 1" />
+    <img src="https://i.ibb.co/bgWHXnz6/13-Powered-Gauntlets.png" alt="Powered Gauntlets 2" />
+    <img src="https://i.ibb.co/zVJWSvg8/14-Rocket-Boots.png" alt="Rocket Boots 1" />
+    <img src="https://i.ibb.co/spHXQzJk/15-Rocket-Boots.png" alt="Rocket Boots 2" />
+  </div>
+
+  <div id="lightbox">
+    <img src="" alt="Expanded image" />
+  </div>
+
+  <script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = lightbox.querySelector('img');
+    const images = document.querySelectorAll('.grid img');
+
+    images.forEach(img => {
+      img.addEventListener('click', () => {
+        lightboxImage.src = img.src;
+        lightbox.style.display = 'flex';
+      });
+    });
+
+    lightbox.addEventListener('click', () => {
+      lightbox.style.display = 'none';
+      lightboxImage.src = '';
+    });
+  </script>
+
+</body>
+</html>
