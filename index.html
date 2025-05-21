@@ -19,16 +19,15 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(6, 1fr); /* 6 colonne fisse desktop */
+      grid-template-columns: repeat(6, 1fr);
       gap: 25px 25px;
       padding: 20px;
       box-sizing: border-box;
       justify-items: center;
-      /* tolto max-width e width per evitare compressioni */
     }
 
     .grid img {
-      width: 300px;  /* dimensione fissa desktop */
+      width: 300px;
       height: auto;
       background: #222;
       border-radius: 6px;
@@ -65,11 +64,38 @@
       box-shadow: 0 0 30px rgba(255,255,255,0.5);
     }
 
-    /* Ottimizzazione Mobile */
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 50px;
+      color: white;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 10000;
+      border-radius: 50%;
+      transition: background 0.3s;
+    }
+
+    .arrow:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    .arrow-left {
+      left: 20px;
+    }
+
+    .arrow-right {
+      right: 20px;
+    }
+
+    /* Mobile Optimizations */
     @media (max-width: 1024px) {
       .grid {
         grid-template-columns: repeat(4, 1fr);
-        gap: 20px 20px;
+        gap: 20px;
       }
       .grid img {
         width: 220px;
@@ -79,7 +105,7 @@
     @media (max-width: 768px) {
       .grid {
         grid-template-columns: repeat(3, 1fr);
-        gap: 15px 15px;
+        gap: 15px;
       }
       .grid img {
         width: 180px;
@@ -89,7 +115,7 @@
     @media (max-width: 480px) {
       .grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 10px 10px;
+        gap: 10px;
         padding: 10px;
       }
       .grid img {
@@ -100,7 +126,7 @@
     @media (max-width: 320px) {
       .grid {
         grid-template-columns: 1fr;
-        gap: 10px 10px;
+        gap: 10px;
         padding: 5px;
       }
       .grid img {
@@ -111,7 +137,8 @@
 </head>
 <body>
 
-  <div class="grid">
+  <div class="grid" id="cardGrid">
+    <!-- Inserisci qui le tue immagini -->
     <img src="https://i.ibb.co/qLznvcfk/0a-Tony-Stark.png" alt="Tony Stark" />
     <img src="https://i.ibb.co/vxxDMbsZ/0b-Iron-Man.png" alt="Iron Man" />
     <img src="https://i.ibb.co/pvDJt2Zz/01-War-Machine.png" alt="War Machine" />
@@ -132,24 +159,55 @@
   </div>
 
   <div id="lightbox">
+    <button class="arrow arrow-left">&#10094;</button>
     <img src="" alt="Expanded image" />
+    <button class="arrow arrow-right">&#10095;</button>
   </div>
 
   <script>
     const lightbox = document.getElementById('lightbox');
     const lightboxImage = lightbox.querySelector('img');
-    const images = document.querySelectorAll('.grid img');
+    const images = Array.from(document.querySelectorAll('.grid img'));
+    const leftArrow = document.querySelector('.arrow-left');
+    const rightArrow = document.querySelector('.arrow-right');
+    let currentIndex = 0;
 
-    images.forEach(img => {
+    function showImage(index) {
+      if (index < 0) index = images.length - 1;
+      if (index >= images.length) index = 0;
+      currentIndex = index;
+      lightboxImage.src = images[currentIndex].src;
+      lightbox.style.display = 'flex';
+    }
+
+    images.forEach((img, index) => {
       img.addEventListener('click', () => {
-        lightboxImage.src = img.src;
-        lightbox.style.display = 'flex';
+        showImage(index);
       });
     });
 
-    lightbox.addEventListener('click', () => {
-      lightbox.style.display = 'none';
-      lightboxImage.src = '';
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.style.display = 'none';
+      }
+    });
+
+    leftArrow.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showImage(currentIndex - 1);
+    });
+
+    rightArrow.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showImage(currentIndex + 1);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.style.display === 'flex') {
+        if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
+        if (e.key === 'ArrowRight') showImage(currentIndex + 1);
+        if (e.key === 'Escape') lightbox.style.display = 'none';
+      }
     });
   </script>
 
