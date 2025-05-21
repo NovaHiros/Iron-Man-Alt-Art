@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Iron Man Deck</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
       margin: 0;
@@ -18,12 +19,14 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(6, 1fr); /* 6 colonne */
-      gap: 25px 25px; /* distanza leggermente ridotta */
+      grid-template-columns: repeat(6, 1fr); /* 6 colonne di base */
+      gap: 25px 25px;
       max-width: 1920px;
       padding: 20px;
       box-sizing: border-box;
       justify-items: center;
+      width: 90vw;
+      max-width: 1200px;
     }
 
     .grid img {
@@ -35,6 +38,7 @@
       cursor: pointer;
       transition: transform 0.3s ease;
       display: block;
+      max-width: 100%;
     }
 
     .grid img:hover {
@@ -62,6 +66,49 @@
       max-height: 90vh;
       border-radius: 10px;
       box-shadow: 0 0 30px rgba(255,255,255,0.5);
+    }
+
+    /* Media queries per mobile */
+    @media (max-width: 1024px) {
+      .grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px 20px;
+      }
+      .grid img {
+        width: 220px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px 15px;
+      }
+      .grid img {
+        width: 180px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px 10px;
+        padding: 10px;
+      }
+      .grid img {
+        width: 140px;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 10px 10px;
+        padding: 5px;
+      }
+      .grid img {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -111,3 +158,4 @@
 
 </body>
 </html>
+
